@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Henry – Meet anyone, anywhere</title>
+<style>
+:root{--bg:#14102b;--bg2:#1f1846;--card:#2a2160;--text:#fff;--mute:#c9c3f0;--pink:#ff4d8d;--orange:#ff9f1c;--teal:#2ec4b6;--blue:#4cc9f0;--violet:#8b5cf6;--green:#3ddc84}
+@media (prefers-color-scheme:light){:root{--bg:#fff7ec;--bg2:#ffe9cf;--card:#fff;--text:#241a4d;--mute:#5d5486}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Trebuchet MS","Segoe UI",system-ui,sans-serif}
+h1,h2,h3{font-family:"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+button{font:inherit;cursor:pointer;border:0;color:inherit}button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;flex-wrap:wrap;gap:10px}
+.logo{font:800 28px "Arial Rounded MT Bold",system-ui,sans-serif;display:flex;align-items:center;gap:10px}
+.logo i{width:38px;height:38px;border-radius:12px;background:conic-gradient(var(--pink),var(--orange),var(--teal),var(--blue),var(--violet),var(--pink));display:grid;place-items:center;font-style:normal;color:#fff}
+nav .links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}nav a{color:var(--mute);text-decoration:none;font-weight:700}
+.btn{padding:12px 22px;border-radius:999px;font-weight:800;background:linear-gradient(90deg,var(--pink),var(--orange));color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.25)}.btn.alt{background:linear-gradient(90deg,var(--teal),var(--blue))}.btn.ghost{background:var(--card);box-shadow:none;border:2px solid var(--violet)}.btn.sm{padding:6px 14px;font-size:14px;box-shadow:none}
+.pill{background:var(--card);padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:30px 0 50px}
+.hero h1{font-size:clamp(38px,6vw,68px);background:linear-gradient(90deg,var(--pink),var(--orange),var(--teal),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--mute);font-size:19px;max-width:46ch}.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+input{font:inherit;padding:12px 16px;border-radius:999px;border:2px solid var(--violet);background:var(--card);color:var(--text);min-width:0;flex:1 1 180px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tile{aspect-ratio:1;border-radius:22px;display:grid;place-items:center;font-size:38px;font-weight:800;color:#fff}
+.tile:nth-child(1){background:var(--pink)}.tile:nth-child(2){background:var(--teal)}.tile:nth-child(3){background:var(--violet)}.tile:nth-child(4){background:var(--orange)}.tile:nth-child(5){background:var(--blue)}.tile:nth-child(6){background:var(--green)}
+section{padding:40px 0}section h2{font-size:clamp(28px,4vw,42px);margin-bottom:8px}.sub{color:var(--mute);margin:0 0 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:var(--card);border-radius:24px;padding:24px;border-top:8px solid var(--c,var(--pink));position:relative}
+.card h3{font-size:22px;margin-bottom:8px}.card p{margin:0;color:var(--mute)}.price{font:800 38px "Arial Rounded MT Bold",system-ui,sans-serif;margin:10px 0}.price small{font-size:15px;color:var(--mute);font-weight:400}
+.card ul{padding-left:20px;margin:0 0 18px;color:var(--mute)}.card .btn{width:100%}.tag{position:absolute;top:-16px;right:18px;background:var(--orange);color:#241a4d;font-weight:800;padding:4px 14px;border-radius:999px;font-size:14px}
+footer{padding:30px 0 50px;color:var(--mute);text-align:center}
+#room{position:fixed;inset:0;background:var(--bg);z-index:20;display:none;flex-direction:column}#room.on{display:flex}
+.top{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;gap:8px;flex-wrap:wrap;background:var(--bg2)}.top div{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stage{flex:1;display:flex;min-height:0;position:relative}.videos{flex:1;display:grid;gap:10px;padding:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));align-content:center;overflow:auto}
+.vid{position:relative;background:linear-gradient(135deg,var(--violet),var(--pink));border-radius:22px;overflow:hidden;aspect-ratio:16/9;display:grid;place-items:center;outline:4px solid transparent;transition:outline-color .15s}
+.vid.speak{outline-color:var(--green)}.vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.vid.mine video{transform:scaleX(-1)}.vid.screen video{object-fit:contain;background:#000;transform:none}
+.av{font-size:56px;font-weight:800;color:#fff}.nm{position:absolute;left:10px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;padding:3px 12px;border-radius:999px;font-size:14px}
+.badge{position:absolute;right:10px;top:8px;display:flex;gap:6px}.badge span{background:rgba(0,0,0,.6);border-radius:999px;padding:2px 9px;font-size:14px}.kick{position:absolute;left:10px;top:8px}
+.invite{background:var(--card);border-radius:22px;aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:16px;border:3px dashed var(--teal);color:var(--mute)}.lk{overflow-wrap:anywhere;color:var(--text)}
+#chat{width:300px;background:var(--bg2);display:none;flex-direction:column;padding:12px;gap:8px}#chat.on{display:flex}#msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.m{background:var(--card);padding:8px 12px;border-radius:16px;align-self:flex-start;max-width:92%;overflow-wrap:anywhere}.m.me{align-self:flex-end;background:var(--violet);color:#fff}.m small{opacity:.7;display:block}
+#caps{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;max-width:80%;background:rgba(0,0,0,.75);color:#fff;border-radius:14px;padding:6px 14px;display:none;text-align:center;z-index:2}
+.bar{display:flex;justify-content:center;gap:10px;padding:12px;background:var(--bg2);flex-wrap:wrap}
+.ic{width:52px;height:52px;border-radius:50%;background:var(--card);font-size:20px;box-shadow:0 4px 0 rgba(0,0,0,.25)}.ic.off{background:var(--pink);color:#fff}.ic.on{background:var(--teal);color:#fff}.ic.end{background:#e11d48;color:#fff;width:auto;padding:0 22px;border-radius:999px;font-weight:800;font-size:16px}
+.fl{position:fixed;bottom:90px;font-size:44px;z-index:50;animation:up 2.5s forwards;pointer-events:none}@keyframes up{to{transform:translateY(-300px);opacity:0}}
+.modal{position:fixed;inset:0;background:rgba(10,6,30,.7);display:none;place-items:center;z-index:40;padding:16px}.modal.on{display:grid}
+.box{background:var(--card);border-radius:28px;padding:24px;max-width:470px;width:100%;max-height:92vh;overflow:auto;border-top:10px solid var(--green)}.box h3{font-size:26px;margin-bottom:10px}.box input{width:100%;margin:5px 0}
+.mp{background:linear-gradient(90deg,#16a34a,#3ddc84);color:#fff;border-radius:18px;padding:12px 16px;margin:10px 0;font-weight:700}.mp b{font-size:22px;display:block}
+.tabs{display:flex;gap:8px;margin:8px 0}.tabs button{flex:1;padding:8px;border-radius:999px;background:var(--bg2);font-weight:700}.tabs button.on{background:var(--violet);color:#fff}
+.err{color:var(--pink);font-weight:700;min-height:22px}.note{color:var(--mute);font-size:14px;margin:6px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:#052e16;font-weight:800;padding:12px 22px;border-radius:999px;z-index:60;display:none;max-width:90vw}
+@media (max-width:760px){.hero{grid-template-columns:1fr}#chat{position:absolute;right:0;top:0;bottom:0;z-index:3}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="wrap">
+<nav><div class="logo"><i>H</i>Henry</div><div class="links"><a href="#pricing">Pricing</a><span class="pill" id="planPill">Free plan</span><button class="btn ghost sm" id="actBtn">Have a key?</button></div></nav>
+<div class="hero"><div>
+<h1>Meet anyone, anywhere. Free.</h1>
+<p>Video and voice calls with friends, family and teams around the world. Start free in one click, and upgrade with M-Pesa for the best experience.</p>
+<div class="row"><span class="pill" id="invBanner" style="display:none">You’ve been invited. Enter your name and press Join.</span></div>
+<div class="row"><input id="nameIn" placeholder="Your name" aria-label="Your name" maxlength="30"></div>
+<div class="row"><button class="btn" id="newBtn">Start a meeting</button></div>
+<div class="row"><input id="codeIn" placeholder="Meeting code or link" aria-label="Meeting code"><button class="btn alt" id="joinBtn">Join</button></div>
+</div><div class="tiles" aria-hidden="true"><div class="tile">A</div><div class="tile">J</div><div class="tile">W</div><div class="tile">M</div><div class="tile">S</div><div class="tile">K</div></div></div>
+<section id="pricing"><h2>Free to start. Better when you pay.</h2><p class="sub">Prices in Kenyan shillings, paid by M-Pesa.</p><div class="grid">
+<div class="card" style="--c:var(--blue)"><h3>Free</h3><div class="price">KES 0</div><ul><li>40-minute meetings</li><li>Up to 10 people</li><li>720p video, chat, reactions, screen share</li></ul><button class="btn ghost" id="freeBtn">Start free</button></div>
+<div class="card" style="--c:var(--pink)"><span class="tag">Most popular</span><h3>Plus</h3><div class="price">KES 250<small> / month</small></div><ul><li>No time limit</li><li>Up to 12 people, 1080p</li><li>Live captions and recording</li></ul><button class="btn" data-plan="Plus">Get Plus</button></div>
+<div class="card" style="--c:var(--orange)"><h3>Pro</h3><div class="price">KES 700<small> / month</small></div><ul><li>Everything in Plus</li><li>Up to 16 people</li><li>★ badge and priority support</li></ul><button class="btn alt" data-plan="Pro">Get Pro</button></div>
+</div><p class="note">The meeting host’s plan sets the limits for everyone in that meeting.</p></section>
+<footer>© Henry · Payment help: <span id="payNum"></span></footer></div>
+
+<div id="room"><div class="top"><div><span class="pill" id="rcode"></span><span class="pill" id="timer">00:00</span><span class="pill" id="count">1 in meeting</span></div>
+<div><button class="btn alt sm" id="copyBtn">Copy invite link</button><button class="btn ghost sm" id="lockBtn" style="display:none">Lock</button><button class="btn ghost sm" id="muteAll" style="display:none">Mute all</button></div></div>
+<div class="stage"><div class="videos" id="videos"></div><div id="caps"></div>
+<aside id="chat"><b>Chat</b><div id="msgs"></div><div class="row" style="margin:0"><input id="chatIn" placeholder="Message" aria-label="Message" maxlength="500"><button class="btn sm" id="send">Send</button></div></aside></div>
+<div class="bar"><button class="ic" id="mic" aria-label="Microphone">🎤</button><button class="ic" id="cam" aria-label="Camera">📹</button><button class="ic" id="scr" aria-label="Share screen">🖥️</button>
+<button class="ic" id="rec" aria-label="Record">⏺️</button><button class="ic" id="cc" aria-label="Captions">CC</button><button class="ic" id="hand" aria-label="Raise hand">✋</button>
+<button class="ic" data-r="👏">👏</button><button class="ic" data-r="😂">😂</button><button class="ic" data-r="🎉">🎉</button><button class="ic" id="chatB" aria-label="Chat">💬</button><button class="ic end" id="leave">Leave</button></div></div>
+
+<div class="modal" id="pay"><div class="box"><h3 id="payTitle">Upgrade</h3>
+<div class="tabs"><button id="tabA">M-Pesa prompt</button><button id="tabM" class="on">Send money</button></div>
+<div id="paneA" style="display:none"><p class="note">We send a payment request to your phone. Enter your M-Pesa PIN to approve.</p><input id="aPhone" placeholder="M-Pesa phone, e.g. 0712345678" inputmode="tel"><button class="btn" id="aGo">Send request</button></div>
+<div id="paneM"><div class="mp">Send money with M-Pesa to<b id="mNum"></b><span id="mName"></span> · Amount: KES <span id="payAmt"></span></div>
+<input id="mName2" placeholder="Your name" maxlength="40"><input id="mPhone" placeholder="Your M-Pesa phone number" inputmode="tel"><input id="mCode" placeholder="Confirmation code from the SMS" maxlength="10"><button class="btn" id="mGo">Send for confirmation</button>
+<p class="note">Henry checks the code and approves your plan. This page unlocks it automatically, usually within minutes.</p></div>
+<div class="err" id="payErr"></div><button class="btn ghost sm" id="payX">Close</button></div></div>
+<div class="modal" id="act"><div class="box"><h3>Enter your key</h3><p class="note">Paste the plan key you were given.</p><input id="keyIn" placeholder="Plan key"><div class="err" id="keyErr"></div><div class="row"><button class="btn" id="keyGo">Activate</button><button class="btn ghost" id="keyX">Close</button></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=i=>document.getElementById(i);
+let cfg={ice:[{urls:"stun:stun.l.google.com:19302"}],stk:false,pay:{}},token="",plan="Free",ws=null,myId="",host="",roomInfo={},peers={},stream=null,screen=null,tInt=null,rec=null,chunks=[],code="",name="Guest",selPlan="Plus",handUp=false,locked=false,recog=null,ac=null,spkInt=null;
+const ls={get(k){try{return localStorage.getItem(k)||""}catch(e){return ""}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function toast(m,ms){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display="none",ms||3800)}
+const paid=()=>plan!=="Free";
+function pill(){$("planPill").textContent=plan==="Pro"?"★ Pro plan":plan==="Plus"?"Plus plan":"Free plan"}
+async function api(path,opt){const r=await fetch(path,opt);let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.detail||"Something went wrong");return j}
+async function setToken(t){const m=await api("/api/me?token="+encodeURIComponent(t));if(m.plan==="Free")return false;token=t;plan=m.plan;ls.set("henry_token",t);pill();return true}
+async function init(){
+ try{cfg=await api("/api/config")}catch(e){}
+ $("payNum").textContent=(cfg.pay.number||"")+" ("+(cfg.pay.name||"")+")";
+ token=ls.get("henry_token");if(token)try{if(!await setToken(token)){token="";ls.set("henry_token","")}}catch(e){}
+ const cl=ls.get("henry_claim");if(cl)pollClaim(cl,true);
+ const m=location.pathname.match(/^\/r\/([a-z0-9-]{3,40})$/i);if(m){$("codeIn").value=m[1];$("invBanner").style.display="inline-block"}
+ pill()}
+init();
+const mkCode=()=>{const a="abcdefghijkmnpqrstuvwxyz",p=n=>Array.from({length:n},()=>a[Math.floor(Math.random()*a.length)]).join("");return p(3)+"-"+p(4)+"-"+p(3)};
+function tile(id,nm,cls){const d=document.createElement("div");d.className="vid "+(cls||"");d.id=id;d.innerHTML='<div class="av"></div><span class="nm"></span><span class="badge"></span>';label(d,nm);return d}
+function label(d,nm,pl){d.querySelector(".av").textContent=(nm||"?")[0].toUpperCase();d.querySelector(".nm").textContent=nm+(pl==="Pro"?" ★":"")}
+function badges(p){const b=p.tile.querySelector(".badge");b.innerHTML="";if(p.hand)b.append(Object.assign(document.createElement("span"),{textContent:"✋"}));if(p.mic===false)b.append(Object.assign(document.createElement("span"),{textContent:"🔇"}))}
+const sendWS=o=>{if(ws&&ws.readyState===1)ws.send(JSON.stringify(o))};
+function addPeer(p){if(peers[p.id])return peers[p.id];const t=tile("p"+p.id,p.name,"");const v=document.createElement("video");v.autoplay=true;v.playsInline=true;t.insertBefore(v,t.firstChild);
+ $("videos").insertBefore(t,$("invite"));if($("invite"))$("invite").style.display="none";
+ const o=peers[p.id]={id:p.id,tile:t,video:v,pc:null,q:[],hand:!!p.hand,mic:p.mic,name:p.name,plan:p.plan};label(t,p.name,p.plan);badges(o);
+ if(host===myId){const k=document.createElement("button");k.className="btn sm kick";k.textContent="Remove";k.onclick=()=>sendWS({t:"kick",id:p.id});t.append(k)}
+ count();return o}
+function adjust(){const n=Object.keys(peers).length,k=n<=3?1500:Math.max(120,Math.floor(1800/n));Object.values(peers).forEach(o=>o.pc&&o.pc.getSenders().forEach(s=>{if(s.track&&s.track.kind==="video"){const p=s.getParameters();if(!p.encodings||!p.encodings.length)p.encodings=[{}];p.encodings[0].maxBitrate=k*1000;p.encodings[0].scaleResolutionDownBy=n>=6?2:1;s.setParameters(p).catch(()=>{})}}))}
+function count(){$("count").textContent=(Object.keys(peers).length+1)+" in meeting";adjust()}
+function mkPC(o){const pc=new RTCPeerConnection({iceServers:cfg.ice});o.pc=pc;
+ pc.onicecandidate=e=>{if(e.candidate)sendWS({t:"sig",to:o.id,d:{c:e.candidate}})};pc.onconnectionstatechange=()=>{if(pc.connectionState==="connected")adjust()};
+ pc.ontrack=e=>{o.video.srcObject=e.streams[0];o.tile.querySelector(".av").style.display="none";watch(e.streams[0],o.tile)};return pc}
+async function flush(o){while(o.q.length)try{await o.pc.addIceCandidate(o.q.shift())}catch(e){}}
+async function callPeer(o){const pc=mkPC(o);stream.getTracks().forEach(t=>pc.addTrack(t,stream));if(!stream.getVideoTracks().length)pc.addTransceiver("video",{direction:"sendrecv"});
+ await pc.setLocalDescription(await pc.createOffer());sendWS({t:"sig",to:o.id,d:{o:pc.localDescription}})}
+async function onSig(from,d){let o=peers[from];if(!o)return;
+ if(d.o){const pc=o.pc||mkPC(o);await pc.setRemoteDescription(d.o);stream.getTracks().forEach(t=>pc.addTrack(t,stream));await flush(o);await pc.setLocalDescription(await pc.createAnswer());sendWS({t:"sig",to:from,d:{a:pc.localDescription}})}
+ else if(d.a&&o.pc){await o.pc.setRemoteDescription(d.a);await flush(o)}
+ else if(d.c){if(o.pc&&o.pc.remoteDescription)o.pc.addIceCandidate(d.c).catch(()=>{});else o.q.push(d.c)}}
+function dropPeer(id){const o=peers[id];if(!o)return;if(o.pc)o.pc.close();o.tile.remove();delete peers[id];count();if(!Object.keys(peers).length&&$("invite"))$("invite").style.display=""}
+/* active speaker */
+function watch(s,tileEl){if(!s.getAudioTracks().length)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const an=ac.createAnalyser();an.fftSize=256;ac.createMediaStreamSource(s).connect(an);tileEl._an=an}catch(e){}}
+function speakLoop(){clearInterval(spkInt);spkInt=setInterval(()=>{document.querySelectorAll(".vid").forEach(t=>{if(!t._an)return;const a=new Uint8Array(t._an.frequencyBinCount);t._an.getByteFrequencyData(a);const v=a.reduce((x,y)=>x+y,0)/a.length;t.classList.toggle("speak",v>18)})},300)}
+function applyRoom(r){roomInfo=r;host=r.host;locked=r.locked;$("lockBtn").style.display=host===myId?"inline-block":"none";$("muteAll").style.display=host===myId?"inline-block":"none";$("lockBtn").textContent=locked?"Unlock":"Lock";plan=plan;tick()}
+function onMsg(m){
+ if(m.t==="welcome"){myId=m.id;applyRoom(m.room);m.peers.forEach(p=>{const o=addPeer(p);callPeer(o).catch(()=>{})})}
+ else if(m.t==="room")applyRoom(m)
+ else if(m.t==="joined"){addPeer(m.peer);toast(m.peer.name+" joined",2000)}
+ else if(m.t==="left"){const o=peers[m.id];if(o)toast(o.name+" left",2000);dropPeer(m.id)}
+ else if(m.t==="sig")onSig(m.from,m.d).catch(()=>{})
+ else if(m.t==="chat"){const e=document.createElement("div");e.className="m"+(m.from===myId?" me":"");const s=document.createElement("small");s.textContent=m.from===myId?"You":m.name;e.append(s,document.createTextNode(m.m));$("msgs").append(e);$("msgs").scrollTop=1e5;if(m.from!==myId&&!$("chat").classList.contains("on"))toast(m.name+": "+m.m.slice(0,60))}
+ else if(m.t==="react"){const f=document.createElement("div");f.className="fl";f.textContent=m.e;f.style.left=(10+Math.random()*75)+"vw";document.body.append(f);setTimeout(()=>f.remove(),2600)}
+ else if(m.t==="hand"){const o=peers[m.from];if(o){o.hand=m.on;badges(o)}if(m.on&&m.from!==myId)toast(m.name+" raised a hand")}
+ else if(m.t==="state"){const o=peers[m.from];if(o){o.mic=m.mic;badges(o)}}
+ else if(m.t==="cap"){const c=$("caps");c.style.display="block";c.textContent=m.name+": "+m.m;clearTimeout(c.h);c.h=setTimeout(()=>c.style.display="none",5000)}
+ else if(m.t==="muteall"){const t=stream&&stream.getAudioTracks()[0];if(t){t.enabled=false;$("mic").className="ic off";sendWS({t:"state",mic:false,cam:camOn()});toast("The host muted everyone")}}
+ else if(m.t==="warn")toast(m.m,7000)
+ else if(m.t==="timeup"){toast("Free meeting time is up. Upgrade for unlimited time.",8000);leave(true)}
+ else if(m.t==="kicked"){toast("The host removed you from the meeting",6000);leave(true)}
+ else if(m.t==="error"){toast(m.m,6000);leave(true)}}
+const camOn=()=>{const t=stream&&stream.getVideoTracks()[0];return !!(t&&t.enabled)};
+async function start(c){
+ name=($("nameIn").value.trim()||"Guest").slice(0,30);code=c||mkCode();
+ try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:{width:{ideal:paid()?1920:1280},height:{ideal:paid()?1080:720}}})}
+ catch(e){try{stream=await navigator.mediaDevices.getUserMedia({audio:true});toast("Camera unavailable. Joined with voice only.")}catch(e2){toast("Allow camera and microphone access to join");return}}
+ $("rcode").textContent="Code: "+code;$("room").className="on";const v=$("videos");v.innerHTML="";
+ const me=tile("me",name+(plan==="Pro"?" ★":""),"mine");if(stream.getVideoTracks().length){const vi=document.createElement("video");vi.autoplay=true;vi.muted=true;vi.playsInline=true;vi.srcObject=stream;me.insertBefore(vi,me.firstChild);me.querySelector(".av").style.display="none"}watch(stream,me);v.append(me);
+ const inv=document.createElement("div");inv.className="invite";inv.id="invite";inv.innerHTML="<div><b>Waiting for others</b><br>Share this link:<br><b class='lk'></b></div>";inv.querySelector(".lk").textContent=link();v.append(inv);
+ $("mic").className="ic on";$("cam").className="ic on";$("msgs").innerHTML="";speakLoop();
+ ws=new WebSocket((location.protocol==="https:"?"wss://":"ws://")+location.host+"/ws");
+ ws.onopen=()=>sendWS({t:"join",room:code,name,token});ws.onmessage=e=>{try{onMsg(JSON.parse(e.data))}catch(x){}};
+ ws.onclose=()=>{if($("room").classList.contains("on")){toast("Disconnected from the meeting");leave(true)}}}
+const link=()=>location.origin+"/r/"+code;
+function tick(){clearInterval(tInt);const t0=Date.now();tInt=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000),m=Math.floor(s/60);let txt=String(m).padStart(2,"0")+":"+String(s%60).padStart(2,"0");if(roomInfo.ends){const left=Math.max(0,Math.floor(roomInfo.ends-Date.now()/1000));txt+="  ·  "+Math.floor(left/60)+" min left"}$("timer").textContent=txt},1000)}
+function leave(quiet){if(rec&&rec.state!=="inactive")rec.stop();if(recog){try{recog.stop()}catch(e){}recog=null}$("cc").className="ic";
+ Object.keys(peers).forEach(dropPeer);[stream,screen].forEach(x=>x&&x.getTracks().forEach(t=>t.stop()));stream=screen=null;
+ if(ws){ws.onclose=null;try{ws.close()}catch(e){}ws=null}clearInterval(tInt);clearInterval(spkInt);$("room").className="";$("chat").classList.remove("on");myId=host=""}
+$("newBtn").onclick=()=>start();$("freeBtn").onclick=()=>start();
+$("joinBtn").onclick=()=>{let c=$("codeIn").value.trim().split("/").pop().split("#").pop();if(!c){toast("Enter a meeting code first");return}start(c)};
+$("leave").onclick=()=>leave();
+$("mic").onclick=()=>{const t=stream&&stream.getAudioTracks()[0];if(!t)return;t.enabled=!t.enabled;$("mic").className="ic "+(t.enabled?"on":"off");sendWS({t:"state",mic:t.enabled,cam:camOn()})};
+$("cam").onclick=()=>{const t=stream&&stream.getVideoTracks()[0];if(!t){toast("No camera found");return}t.enabled=!t.enabled;$("cam").className="ic "+(t.enabled?"on":"off");const v=document.querySelector("#me video");if(v)v.style.visibility=t.enabled?"visible":"hidden";document.querySelector("#me .av").style.display=t.enabled?"none":"block";sendWS({t:"state",mic:!!(stream.getAudioTracks()[0]||{}).enabled,cam:t.enabled})};
+function swap(track){Object.values(peers).forEach(o=>o.pc&&o.pc.getSenders().forEach(s=>{if(s.track&&s.track.kind==="video"||(!s.track&&o.pc.getTransceivers().find(x=>x.sender===s&&x.receiver.track.kind==="video")))s.replaceTrack(track).catch(()=>{})}))}
+$("scr").onclick=async()=>{if(screen){screen.getTracks().forEach(t=>t.stop());return}
+ try{screen=await navigator.mediaDevices.getDisplayMedia({video:true});const tr=screen.getVideoTracks()[0],d=tile("screen","Your screen","screen");const v=document.createElement("video");v.autoplay=true;v.muted=true;v.srcObject=screen;d.insertBefore(v,d.firstChild);d.querySelector(".av").style.display="none";$("videos").append(d);$("scr").className="ic on";swap(tr);
+ tr.onended=()=>{d.remove();screen=null;$("scr").className="ic";const c=stream&&stream.getVideoTracks()[0];if(c)swap(c)}}catch(e){toast("Screen sharing isn’t available on this device")}};
+$("rec").onclick=()=>{if(!paid()){toast("Recording is a Plus feature");openPay("Plus");return}
+ if(rec&&rec.state==="recording"){rec.stop();$("rec").className="ic";return}
+ try{chunks=[];rec=new MediaRecorder(stream);rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);rec.onstop=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(chunks,{type:"video/webm"}));a.download="henry-"+code+".webm";a.click();toast("Recording saved")};rec.start();$("rec").className="ic off";toast("Recording your camera and mic")}catch(e){toast("Recording isn’t supported in this browser")}};
+$("cc").onclick=()=>{if(!paid()){toast("Live captions are a Plus feature");openPay("Plus");return}
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("Captions need Chrome or Edge");return}
+ if(recog){recog.onend=null;recog.stop();recog=null;$("cc").className="ic";return}
+ recog=new SR();recog.continuous=true;recog.interimResults=false;recog.lang="en-US";recog.onresult=e=>{const r=e.results[e.results.length-1];if(r.isFinal)sendWS({t:"cap",m:r[0].transcript.trim()})};recog.onend=()=>{if(recog)try{recog.start()}catch(e){}};recog.start();$("cc").className="ic on";toast("Captions on. They show for everyone in the meeting.")};
+$("hand").onclick=()=>{handUp=!handUp;$("hand").className="ic "+(handUp?"on":"");sendWS({t:"hand",on:handUp})};
+document.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>sendWS({t:"react",e:b.dataset.r}));
+$("chatB").onclick=()=>$("chat").classList.toggle("on");
+const say=()=>{const i=$("chatIn"),t=i.value.trim();if(!t)return;sendWS({t:"chat",m:t});i.value=""};$("send").onclick=say;$("chatIn").onkeydown=e=>{if(e.key==="Enter")say()};
+$("copyBtn").onclick=()=>{const t="Join my Henry meeting: "+link();navigator.clipboard?navigator.clipboard.writeText(t).then(()=>toast("Invite link copied"),()=>toast(t)):toast(t)};
+$("lockBtn").onclick=()=>sendWS({t:"lock",on:!locked});$("muteAll").onclick=()=>{sendWS({t:"muteall"});toast("Muted everyone else")};
+/* payments */
+function openPay(p){selPlan=p;const pr=(cfg.plans||{})[p]||{price:p==="Pro"?700:250};$("payTitle").textContent="Upgrade to Henry "+p;$("payAmt").textContent=pr.price;$("mNum").textContent=cfg.pay.number||"";$("mName").textContent="Name: "+(cfg.pay.name||"");$("payErr").textContent="";$("tabA").style.display=cfg.stk?"block":"none";tab(cfg.stk?"A":"M");$("pay").classList.add("on")}
+function tab(x){$("paneA").style.display=x==="A"?"block":"none";$("paneM").style.display=x==="M"?"block":"none";$("tabA").className=x==="A"?"on":"";$("tabM").className=x==="M"?"on":""}
+$("tabA").onclick=()=>tab("A");$("tabM").onclick=()=>tab("M");$("payX").onclick=()=>$("pay").classList.remove("on");
+document.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>openPay(b.dataset.plan));
+$("aGo").onclick=async()=>{$("payErr").textContent="";try{const r=await api("/api/pay",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:$("aPhone").value,plan:selPlan})});toast("Check your phone and enter your M-Pesa PIN",8000);pollPay(r.id)}catch(e){$("payErr").textContent=e.message}};
+async function pollPay(id,n=0){if(n>40)return;try{const r=await api("/api/pay/"+id);if(r.status==="paid"&&await setToken(r.token)){$("pay").classList.remove("on");toast("Payment received. "+plan+" is active!",6000);return}if(r.status==="failed"){toast("Payment was not completed",6000);return}}catch(e){}setTimeout(()=>pollPay(id,n+1),4000)}
+$("mGo").onclick=async()=>{$("payErr").textContent="";try{const r=await api("/api/claim",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("mName2").value,phone:$("mPhone").value,code:$("mCode").value,plan:selPlan})});ls.set("henry_claim",r.id);$("pay").classList.remove("on");toast("Sent! Your plan unlocks when Henry approves it.",7000);pollClaim(r.id)}catch(e){$("payErr").textContent=e.message}};
+async function pollClaim(id,quiet,n=0){if(n>200)return;try{const r=await api("/api/claim/"+id);if(r.status==="approved"&&await setToken(r.token)){ls.set("henry_claim","");toast("Payment approved. "+plan+" is active!",7000);return}if(r.status==="rejected"){ls.set("henry_claim","");if(!quiet)toast("Payment was not approved. Contact Henry.",7000);else toast("Your last payment was not approved. Contact Henry.",7000);return}}catch(e){if(String(e.message).length&&n>2)return}setTimeout(()=>pollClaim(id,quiet,n+1),15000)}
+$("actBtn").onclick=()=>$("act").classList.add("on");$("keyX").onclick=()=>$("act").classList.remove("on");
+$("keyGo").onclick=async()=>{try{if(await setToken($("keyIn").value.trim())){$("act").classList.remove("on");toast("Plan activated: "+plan)}else $("keyErr").textContent="That key isn’t valid or has expired."}catch(e){$("keyErr").textContent=e.message}};
+</script></body></html>
